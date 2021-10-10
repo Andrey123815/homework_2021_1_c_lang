@@ -6,6 +6,7 @@ typedef struct {
     double square_term;
     double linear_term;
     double free_term;
+    int y_x_system;
 } Coefficients;
 
 
@@ -26,7 +27,7 @@ typedef struct {
 void get_linear_term (Points_ratio *p, Coefficients *q);
 void get_square_term (Points_ratio *p, Coefficients *q);
 void get_free_term (Points_ratio *p, Coefficients *q);
-_Bool get_coefficients (const double *x1, const double *y1, const double *x2, const double *y2,
-                                const double *x3, const double *y3, Coefficients *equation);
+int get_coefficients (double *x1, double *y1, double *x2, double *y2,
+                                double *x3, double *y3, Coefficients *equation);
 
 #endif //INC_1SEM_C_CPP_EQUATION_H
