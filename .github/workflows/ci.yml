@@ -35,11 +35,11 @@ jobs:
           sudo apt-get install lcov
           ./build/test.out
           mkdir coverage && cd coverage
-          gcov ../build/CMakeFiles/main.out.dir/main.c.gcno
-          cp -r ../build/CMakeFiles/main.out.dir/ .
+          gcov ../build/CMakeFiles/equa.dir/src/equation.c.gcno
+          cp -r ../build/CMakeFiles/equa.dir/ .
           cd ..
-          lcov --capture --directory coverage/ --output-file main.info
-          genhtml main.info --output-directory coverage-report/
+          lcov --capture --directory coverage/ --output-file equa.info
+          genhtml equa.info --output-directory coverage-report/
           
       - name: Archive coverage test results
         uses: actions/upload-artifact@v2
