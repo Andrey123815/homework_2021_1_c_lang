@@ -29,5 +29,6 @@ void get_square_term (Points_ratio *p, Coefficients *q);
 void get_free_term (Points_ratio *p, Coefficients *q);
 int get_coefficients (double *x1, double *y1, double *x2, double *y2,
                                 double *x3, double *y3, Coefficients *equation);
+void print_coefficients(int flag_get_coefficients, Coefficients *equation);
 
 #endif //INC_1SEM_C_CPP_EQUATION_H

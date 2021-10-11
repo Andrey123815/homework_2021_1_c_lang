@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "../include/equation.h"
+#include "equation.h"
+
+#define NULL_DATA -1
 
 
 void get_square_term (Points_ratio *p, Coefficients *q) {
@@ -48,11 +50,15 @@ int get_coefficients (double *x1, double *y1, double *x2, double *y2,
     }
 
     // Initialization
-    Points_ratio points = {.x1= *x1, .y1 = *y1, .y2 = *y2, .y3 = *y3, .delta_x32 = *x3 - *x2,
-            .delta_y32 = *y3 - *y2, .delta_x21 = *x2 - *x1, .delta_y21 = *y2 - *y1,
-            .sum_x32 = *x3 + *x2, .sum_x21 = *x2 + *x1};
+    Points_ratio points = {
+            .x1= *x1, .y1 = *y1, .y2 = *y2, .y3 = *y3,
+            .delta_x32 = *x3 - *x2,.delta_y32 = *y3 - *y2,
+            .delta_x21 = *x2 - *x1, .delta_y21 = *y2 - *y1,
+            .sum_x32 = *x3 + *x2, .sum_x21 = *x2 + *x1
+    };
 
     equation->y_x_system = 0;
+
     // Calculation coefficients
     get_square_term(&points, equation);
     if (isnan(equation->square_term) == 0 && isfinite(equation->square_term) == 0) {
@@ -64,4 +70,16 @@ int get_coefficients (double *x1, double *y1, double *x2, double *y2,
     get_free_term(&points, equation);
 
     return 0;
+}
+
+void print_coefficients(int flag_get_coefficients, Coefficients *equation) {
+    if (flag_get_coefficients == NULL_DATA) {
+        printf("Mistake enter data");
+        return;
+    }
+    if (equation->y_x_system == 1) {
+        printf("Equation: %3.2f * y^2 + %3.2f * y + %3.2f", equation->square_term, equation->linear_term, equation->free_term);
+        return;
+    }
+    printf("Equation: %3.2f * x^2 + %3.2f * x + %3.2f", equation->square_term, equation->linear_term, equation->free_term);
 }

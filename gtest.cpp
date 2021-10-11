@@ -6,24 +6,32 @@ extern "C" {
 }
 
 
-TEST(EQUATION_TEST, Null_Case) {
-    double x1, x2, y2, x3, y3;
+TEST(EQUATION_TEST, NULL_CASE) {
+    double first_point_x, second_point_x, second_point_y, third_point_x, third_point_y;
     Coefficients equation = {};
-    EXPECT_EQ(get_coefficients(&x1, NULL, &x2, &y2, &x3, &y3, &equation), -1);
-}
 
-TEST(EQUATION_TEST, Sample_Points) {
-    double x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 1, y3 = -6;
-
-    Coefficients equation = {};
-    EXPECT_EQ(get_coefficients(&x1, &y1, &x2, &y2, &x3, &y3, &equation), -1);
+    EXPECT_EQ(get_coefficients(&first_point_x, NULL, &second_point_x, &second_point_y,
+                                            &third_point_x, &third_point_y, &equation), -1);
 }
 
 
-TEST(EQUATION_TEST, Simple_Points) {
-    double x1 = 0, y1 = 0, x2 = 1, y2 = 1, x3 = -1, y3 = 1;
+TEST(EQUATION_TEST, SAMPLE_POINTS) {
+    double first_point_x = 0, first_point_y = 0, second_point_x = 0, second_point_y = 0,
+                                                        third_point_x = 1, third_point_y = -6;
+    Coefficients equation = {};
+
+    EXPECT_EQ(get_coefficients(&first_point_x, &first_point_y, &second_point_x,
+                               &second_point_y, &third_point_x, &third_point_y, &equation), -1);
+}
+
+
+TEST(EQUATION_TEST, SIMPLE_POINTS) {
+    double first_point_x = 0, first_point_y = 0, second_point_x = 1, second_point_y = 1,
+                                                        third_point_x = -1, third_point_y = 1;
     Coefficients equation = {}, eq_tst = {1, 0, 0};
-    get_coefficients(&x1, &y1, &x2, &y2, &x3, &y3, &equation);
+    get_coefficients(&first_point_x, &first_point_y, &second_point_x, &second_point_y,
+                                                    &third_point_x, &third_point_y, &equation);
+
     EXPECT_EQ(equation.square_term, eq_tst.square_term);
     EXPECT_EQ(equation.linear_term, eq_tst.linear_term);
     EXPECT_EQ(equation.free_term, eq_tst.free_term);
@@ -31,11 +39,14 @@ TEST(EQUATION_TEST, Simple_Points) {
 }
 
 
-TEST(EQUATION_TEST, Reverse_SC) {
-    double x1 = 0, y1 = 0, x2 = 1, y2 = 1, x3 = 1, y3 = -1;
+TEST(EQUATION_TEST, REVERSE_SC) {
+    double first_point_x = 0, first_point_y = 0, second_point_x = 1, second_point_y = 1,
+                                                            third_point_x = 1, third_point_y = -1;
 
     Coefficients equation = {}, eq_tst = {1, 0, 0, 1};
-    get_coefficients(&x1, &y1, &x2, &y2, &x3, &y3, &equation);
+    get_coefficients(&first_point_x, &first_point_y, &second_point_x, &second_point_y,
+                                                        &third_point_x, &third_point_y, &equation);
+
     EXPECT_EQ(equation.square_term, eq_tst.square_term);
     EXPECT_EQ(equation.linear_term, eq_tst.linear_term);
     EXPECT_EQ(equation.free_term, eq_tst.free_term);
