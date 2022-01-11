@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on: pull_request
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  CI:
+    name: Run CI
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name : Check style code
+        run : |
+          sudo apt-get install -y cppcheck
+          cppcheck --enable=warning,style,performance,portability src/
+          
+      - name : Building
+        run : |
+          mkdir build
+          cd build
+          sudo apt-get install -y libgtest-dev
+          cmake ..
+          make
+          cd ..
+          
+      - name: Coverage test
+        run: |
+          sudo apt-get install lcov
+          ./build/test.out
+          mkdir coverage && cd coverage
+          gcov ../build/CMakeFiles/equa.dir/src/equation.c.gcno
+          cp -r ../build/CMakeFiles/equa.dir/ .
+          cd ..
+          lcov --capture --directory coverage/ --output-file equa.info
+          genhtml equa.info --output-directory coverage-report/
+          
+      - name: Archive coverage test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Coverage test
+          path: coverage-report/
+
+      - name: Valgrind test
+        run: |
+          sudo apt-get install -y valgrind
+          mkdir valgrid-output
+          valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --log-file=valgrid-output/report -q ./build/test.out
+          
+      - name: Archive valgrind test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Valgrind test
+          path: valgrid-output/
