@@ -36,6 +36,8 @@ Such coefficients are selected that, with an algebraic sum, one of the coefficie
 turns to zero. The quadratic coefficient, linear coefficient
 and free term are calculated sequentially.
     
+#### About requirements:  
+
 HW-1 is devoted to acquiring the skills of safe working with memory in C using basic data structures and establishing a basic infrastructure for automatic code verification. As a result of HW-1 is expected:
 
 - competent splitting of the project into files
